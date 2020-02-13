@@ -6,7 +6,6 @@ int Rot13(int num);
 
 int main(){
 	FILE *crypticFile;
-	FILE *uncodedFile;
 	char buff[255];
 	char outBuff[255];
 	int i;
@@ -23,12 +22,15 @@ int main(){
 	charHolder3[1] = '\0';
 
 	crypticFile = fopen("/root/newrepo/input.txt", "r");
-	uncodedFile = fopen("/root/newrepo/uncoded.txt", "w+");
+
 	fgets(buff, 255, (FILE*)crypticFile);
 	
-	for(i=0;i<=strlen(buff);i++){
+	printf("%s\n", buff);
+	printf("%d\n\n", strlen(buff));
+	for(i=0;i<=(strlen(buff)-2);i++){
 		if((buff[i] != ' ')){
 			if(buff[i] != '-'){
+				//printf("i: %d  buff[i]: %c", i, buff[i]);
 				if(buff[i+1]!='-'){
 					sprintf(charHolder2,"%c",buff[i]);
 				}
@@ -38,8 +40,8 @@ int main(){
 					numHolder = atoi(charHolder2);
 					numHolder = numHolder+64;
 					numHolder = Rot13(numHolder);
-					fputc(numHolder, uncodedFile);
-					//printf("%c", numHolder);
+					outBuff[i] = numHolder;
+					printf("%c", numHolder);
 				}
 				
 				if(buff[i+1]!=' '){
@@ -51,17 +53,10 @@ int main(){
 					numHolder = atoi(charHolder3);
 					numHolder = numHolder+64;
 					numHolder = Rot13(numHolder);
-					fputc(numHolder, uncodedFile);
-					//printf("%c", numHolder);
+					outBuff[i] = numHolder;
+					printf("%c", numHolder);
 				}
-				if(i == strlen(buff)){
-					sprintf(charHolder3, "%c",buff[i-2]);
-					numHolder = atoi(charHolder3);
-					numHolder = numHolder+64;
-					numHolder = Rot13(numHolder);
-					fputc(numHolder, uncodedFile);
-					//printf("%c", numHolder);
-				}
+
 			}
 			else{
 				charHolder2[0] = '\0';
@@ -73,14 +68,12 @@ int main(){
 			}
 		}
 		else{
-			fputc(32, uncodedFile);
-			//printf(" ");
+			outBuff[i] = ' ';
+			printf(" ");
 		}
 	}
-	
+
 	fclose(crypticFile);
-	fclose(uncodedFile);
-	
 	return 0;
 }
 
