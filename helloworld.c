@@ -16,6 +16,7 @@ int main(void) {
   //'printf' is a formatted print function that is included in 'stdio'
   //The '\n' character is a newline character
   printf("Hello World\n");
+  printf("and all who inhabit it\n");
   //all instructions are terminated with a semi-color ';'
   
   //return 0 is to satisfy the return type int, 0 is the standard
