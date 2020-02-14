@@ -7,8 +7,7 @@ int Rot13(int num);
 int main(){
 	FILE *crypticFile;
 	FILE *uncodedFile;
-	char buff[255];
-	char outBuff[255];
+	char buff[2048];
 	int i;
 	char charHolder1[2];
 	char charHolder2[2];
@@ -23,9 +22,9 @@ int main(){
 	charHolder3[1] = '\0';
 
 	crypticFile = fopen("/root/newrepo/input.txt", "r");
-	uncodedFile = fopen("/root/newrepo/uncoded.txt", "w+");
-	fgets(buff, 255, (FILE*)crypticFile);
-	
+	uncodedFile = fopen("/root/newrepo/uncoded2.txt", "w+");
+	fgets(buff, 2048, (FILE*)crypticFile);
+
 	for(i=0;i<=strlen(buff);i++){
 		if((buff[i] != ' ')){
 			if(buff[i] != '-'){
@@ -39,7 +38,6 @@ int main(){
 					numHolder = numHolder+64;
 					numHolder = Rot13(numHolder);
 					fputc(numHolder, uncodedFile);
-					//printf("%c", numHolder);
 				}
 				
 				if(buff[i+1]!=' '){
@@ -52,7 +50,6 @@ int main(){
 					numHolder = numHolder+64;
 					numHolder = Rot13(numHolder);
 					fputc(numHolder, uncodedFile);
-					//printf("%c", numHolder);
 				}
 				if(i == strlen(buff)){
 					sprintf(charHolder3, "%c",buff[i-2]);
@@ -60,7 +57,6 @@ int main(){
 					numHolder = numHolder+64;
 					numHolder = Rot13(numHolder);
 					fputc(numHolder, uncodedFile);
-					//printf("%c", numHolder);
 				}
 			}
 			else{
@@ -74,7 +70,12 @@ int main(){
 		}
 		else{
 			fputc(32, uncodedFile);
-			//printf(" ");
+			charHolder3[0] = '\0';
+			charHolder3[1] = '\0';
+			charHolder1[0] = '\0';
+			charHolder1[1] = '\0';
+			charHolder2[0] = '\0';
+			charHolder2[1] = '\0';
 		}
 	}
 	
@@ -86,14 +87,14 @@ int main(){
 
 int Rot13(int num){
 	int tmp;
-	if(num<=65+12){
+	if(num<=77){
 		num = num+13;
 	}
 	else{
 		tmp = 90-num;
 		num = 64+(13-tmp);
 	}
-
+	
 	return num;
 }
 
